@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('article', 'App\Http\Controllers\Api\ArticleController@getAll');
+//
+//Route::group(['prefix' => 'article'], function () {
+//});
