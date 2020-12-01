@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('article', 'App\Http\Controllers\Api\ArticleController@getAll');
-//
-//Route::group(['prefix' => 'article'], function () {
-//});
+// Authentication
+Route::group(['middleware' => 'auth:api'], function () {
+    // TODO add feature to generate JWT
+});
+
+Route::group(['prefix' => 'article'], function () {
+    Route::get('/', [ArticleController::class, 'getAll']);
+    Route::get('{id}', [ArticleController::class, 'get']);
+    Route::post('/', [ArticleController::class, 'create']);
+    Route::put('{id}', [ArticleController::class, 'update']);
+    Route::delete('{id}', [ArticleController::class, 'delete']);
+});
